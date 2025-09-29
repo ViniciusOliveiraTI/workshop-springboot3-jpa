@@ -2,6 +2,7 @@ package com.viniciusdev.course.services;
 
 import com.viniciusdev.course.entities.User;
 import com.viniciusdev.course.repositories.UserRepository;
+import com.viniciusdev.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> object = userRepository.findById(id);
-        return object.get();
+        return object.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User user) {
